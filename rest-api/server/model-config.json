@@ -12,5 +12,9 @@
       "../common/mixins",
       "./mixins"
     ]
+  },
+  "gate": {
+    "dataSource": null,
+    "public": true
   }
 }
