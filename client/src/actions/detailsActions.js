@@ -20,7 +20,7 @@ export const getBackendDetails = () => async(dispatch) => {
   try {
     dispatch(backendDetailsRequest());
 
-    const details = await api.details();
+    const { details } = await api.details();
 
     dispatch(backendDetailsSuccess(details));
   } catch(err) {
