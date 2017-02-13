@@ -1,17 +1,22 @@
 import React, { PropTypes } from 'react';
-import { Button, ErrorCard } from './';
+import { Button, ErrorCard, Details } from './';
 
-const Welcome = ({ error, username, id, logout }) => (
+const Welcome = ({ ...props }) => (
   <div>
     <h1>Welcome!</h1>
-    {error && <ErrorCard>{error}</ErrorCard>}
+    {props.error && <ErrorCard>{props.error}</ErrorCard>}
     <div className="welcome">
       <div>
-        <p><b>Username:</b> {username}</p>
-        <p><b>ID:</b> {id}</p>
+        <p><b>Username:</b> {props.username}</p>
+        <p><b>ID:</b> {props.id}</p>
+        {props.nodeVersion && <Details
+          nodeVersion={props.nodeVersion}
+          appPath={props.appPath}
+          dateAndTime={props.dateAndTime}
+        />}
       </div>
     </div>
-    <Button clickHandler={logout}>Logout</Button>
+    <Button clickHandler={props.logout}>Logout</Button>
   </div>
 );
 
@@ -19,6 +24,9 @@ Welcome.propTypes = {
   error: PropTypes.string,
   username: PropTypes.string,
   id: PropTypes.number,
+  nodeVersion: PropTypes.string,
+  appPath: PropTypes.string,
+  dateAndTime: PropTypes.string,
   logout: PropTypes.func,
 };
 

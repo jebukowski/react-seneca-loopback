@@ -52,7 +52,7 @@ fieldset {
   border-style: solid;
   border-color: black;
 
-  & div {
+  > div {
     padding: 0 1rem;
   }
 }
