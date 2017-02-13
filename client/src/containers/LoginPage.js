@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/sessionActions';
 import { LoginForm } from '../components';
 
-const LoginPage = ({ error, username, password, credentialsChange }) => {
+const LoginPage = ({ error, isLoading, username, password, credentialsChange, login }) => {
   const credentialHandler = (e) => {
     const { name, value } = e.target;
 
@@ -17,7 +17,10 @@ const LoginPage = ({ error, username, password, credentialsChange }) => {
     // prevent page reload
     e.preventDefault();
 
-    // TODO: add submission/login functionality
+    // prevent multiple submissions while login pending
+    if (isLoading) return;
+
+    login(username, password);
   };
 
   return (
@@ -33,19 +36,23 @@ const LoginPage = ({ error, username, password, credentialsChange }) => {
 
 const mapStateToProps = state => ({
   error: state.session.error,
+  isLoading: state.session.isLoading,
   username: state.session.credentials.username,
   password: state.session.credentials.password,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   credentialsChange: credentials => dispatch(actions.credentialsChange(credentials)),
+  login: (username, password) => dispatch(actions.login(username, password)),
 });
 
 LoginPage.propTypes = {
   error: PropTypes.string,
+  isLoading: PropTypes.bool,
   username: PropTypes.string,
   password: PropTypes.string,
   credentialsChange: PropTypes.func,
+  login: PropTypes.func,
 };
 
 export default connect(
