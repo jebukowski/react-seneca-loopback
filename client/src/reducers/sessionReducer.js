@@ -16,37 +16,44 @@ export default (state = init, action) => {
 
   switch (type) {
     case types.CREDENTIALS_CHANGE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         error: '',
-        credentials: Object.assign({}, state.credentials, {
+        credentials: {
+          ...state.credentials,
           [payload.credential]: payload.value,
-        }),
-      });
+        },
+      };
 
     case types.LOGIN_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isLoading: true,
         error: '',
-      });
+      };
 
     case types.LOGIN_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isLoading: false,
         isLoggedIn: true,
         userInfo: payload,
-      });
+        credentials: init.credentials,
+      };
 
     case types.LOGIN_ERROR:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isLoading: false,
         error: payload,
-      });
+      };
 
     case types.LOGOUT_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isLoggedIn: false,
         userInfo: null,
-      });
+      };
 
     default:
       return state;

@@ -13,24 +13,27 @@ export default (state = init, action) => {
 
   switch (type) {
     case types.BACKEND_DETAILS_REQUEST:
-      return Object.assign({}, state , {
+      return {
+        ...state,
         isLoading: true,
         error: '',
-      });
+      };
 
     case types.BACKEND_DETAILS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isLoading: false,
         nodeVersion: payload.nodeVersion,
         appPath: payload.appPath,
         dateAndTime: payload.dateAndTime,
-      });
+      };
 
     case types.BACKEND_DETAILS_ERROR:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isLoading: false,
         error: payload,
-      });
+      };
 
     default:
       return state;
