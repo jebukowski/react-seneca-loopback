@@ -42,6 +42,12 @@ export default (state = init, action) => {
         error: payload,
       });
 
+    case types.LOGOUT_SUCCESS:
+      return Object.assign({}, state, {
+        isLoggedIn: false,
+        userInfo: null,
+      });
+
     default:
       return state;
   }

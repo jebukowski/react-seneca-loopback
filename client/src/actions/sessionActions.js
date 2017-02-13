@@ -26,6 +26,10 @@ const loginError = err => ({
   error: true,
 });
 
+const logoutSuccess = () => ({
+  type: types.LOGOUT_SUCCESS,
+});
+
 export const login = (username, password) => async(dispatch) => {
   try {
     dispatch(loginRequest());
@@ -38,4 +42,9 @@ export const login = (username, password) => async(dispatch) => {
   } catch(err) {
     dispatch(loginError(err));
   }
+};
+
+export const logout = () => async(dispatch) => {
+  dispatch(logoutSuccess());
+  browserHistory.push('/');
 };
