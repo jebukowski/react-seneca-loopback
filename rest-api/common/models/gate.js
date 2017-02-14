@@ -1,18 +1,24 @@
 'use strict';
 
-const moment = require('moment');
+const Promise = require('bluebird');
+const seneca = require('seneca')();
+
+const act = Promise.promisify(
+  seneca.client({
+    host: 'localhost',
+    port: 8080,
+  }).act, {
+    context: seneca,
+  }
+);
 
 module.exports = function(gate) {
 
   /*---------- define remote methods ----------*/
   gate.details = (cb) => {
-    const details = {
-      nodeVersion: process.version,
-      appPath: process.argv[1],
-      dateAndTime: moment().format('LLL'),
-    };
-
-    cb(null, details);
+    act({ role: 'api', cmd: 'details' })
+      .then(details => cb(null, details))
+      .catch(err => cb(err));
   };
 
   gate.login = (req, res, cb) => {
