@@ -14,4 +14,5 @@ export default function() {
 
     done(null, details);
   });
+  
 }
