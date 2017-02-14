@@ -24,17 +24,15 @@ module.exports = function(gate) {
   gate.login = (req, res, cb) => {
     const { username, password } = req.body;
 
-    if (username === 'demo' && password === 'password1') {
-      // user information that would be returned from db
-      const userInfo = {
-        id: 1,
-        username: 'demo',
-      };
+    act({ role: 'api', cmd: 'login', username, password })
+      .then(result => {
+        if (result.isCorrect) {
+          return res.status(200).send(result.userInfo);
+        }
 
-      res.status(200).send(userInfo);
-    } else {
-      res.sendStatus(401);
-    }
+        return res.sendStatus(401);
+      })
+      .catch(err => res.sendStatus(500));
   };
 
   /*---------- register remote methods ----------*/
